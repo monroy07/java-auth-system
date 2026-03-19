@@ -1,0 +1,27 @@
+﻿name: Java CI
+
+on:
+  push:
+    branches: [ main, master, feature/login-system ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Compile Java
+      run: javac -d out src/main/java/com/jpmonroy/app/**/*.java
+    
+    - name: Run Main
+      run: java -cp out com.jpmonroy.app.Main
+      continue-on-error: true
